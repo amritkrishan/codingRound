@@ -3,6 +3,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
@@ -10,23 +12,27 @@ public class HotelBookingTest {
 
     WebDriver driver = new ChromeDriver();
 
-    @FindBy(linkText = "Hotels")
-    private WebElement hotelLink;
+    /*@FindBy(how=How.XPATH, using="//li[@class='hotelApp']/following::a[contains(@href,'/hotels')]/span")
+    public WebElement hotelLink;*/
+
+    @FindBy(how=How.LINK_TEXT, using="Hotels")
+    public WebElement hotelLink;
 
     @FindBy(id = "Tags")
-    private WebElement localityTextBox;
+    public WebElement localityTextBox;
 
     @FindBy(id = "SearchHotelsButton")
-    private WebElement searchButton;
+    public WebElement searchButton;
 
     @FindBy(id = "travellersOnhome")
-    private WebElement travellerSelection;
+    public WebElement travellerSelection;
 
     @Test
     public void shouldBeAbleToSearchForHotels() {
         setDriverPath();
-
+        PageFactory.initElements(driver, this);
         driver.get("https://www.cleartrip.com/");
+        waitFor(2000);
         hotelLink.click();
 
         localityTextBox.sendKeys("Indiranagar, Bangalore");
@@ -36,6 +42,14 @@ public class HotelBookingTest {
 
         driver.quit();
 
+    }
+
+    private void waitFor(int durationInMilliSeconds) {
+        try {
+            Thread.sleep(durationInMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     private void setDriverPath() {
