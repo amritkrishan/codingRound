@@ -1,0 +1,15 @@
+Code/Design Review:
+
+In HotelBookingTest - Page Factory Approach is used (As it's mini code, PageFactory elements are initialized in same class). But in case of bigger projects, it's advisable to have separate Java classes for storing objects (i.e. individual Page classes) which are referenced from the Test class whenever required.
+
+For other classes, as elements are coded inline in the test class, it's better to use interface to store all related objects in one place (Screen wise) and import those interfaces wherever needed. (Page Object Model for reusability and maintenance)
+
+waitFor method can always be replaced by fluentWait functionality (polling mechanism, makes code efficient)
+
+In FlightBookingTest have used current Date as Flight Search Date, can be parameterized so that it becomes generic.
+
+No where we have used @BeforeClass and @AfterClass, it's advisable to use @BeforeClass while opening browser/navigating to url and @AfterClass to quit browser.
+
+Listener Class can be used for Test Execution Reporting (TestNG project).
+
+Very few assertions used, assertions help you track where exactly your test failed.
