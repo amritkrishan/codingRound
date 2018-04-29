@@ -1,7 +1,6 @@
 import com.sun.javafx.PlatformUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -21,15 +20,15 @@ public class SignInTest {
 
     @Test
     public void shouldThrowAnErrorIfSignInDetailsAreMissing() {
-        driver.findElement(By.linkText("Your trips")).click();
-        driver.findElement(By.xpath("//*[@id='SignIn']")).click();
+        driver.findElement(By.linkText(SignIn.YOUR_TRIPS)).click();
+        driver.findElement(By.xpath(SignIn.SIGN_IN_BTN)).click();
         //Switching to iframe that has Login pop up
-        driver.switchTo().frame("modal_window");
+        driver.switchTo().frame(SignIn.IFRAME_NAME);
         waitFor(2000);
-        driver.findElement(By.xpath("//html/body/div/div/div/div/div/form//dl/dd[5]/button[text()='Sign in']")).click();
+        driver.findElement(By.xpath(SignIn.SIGN_IN_BTN_IFRAME)).click();
         //Changed xpath as the text bis tied up to span
-        String errors1 = driver.findElement(By.xpath("//*[@id='errors1']/span")).getText();
-        Assert.assertTrue(errors1.contains("There were errors in your submission"));
+        String errors1 = driver.findElement(By.xpath(SignIn.ERROR_TEXT)).getText();
+        Assert.assertTrue(errors1.contains(AssertionMessages.error1));
         driver.switchTo().parentFrame();
     }
 
